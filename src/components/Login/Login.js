@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useReducer, useContext } from "react";
+import React, {
+  useState,
+  useEffect,
+  useReducer,
+  useContext,
+  useRef,
+} from "react";
 import Input from "../Input/Input";
 import Card from "../UI/Card/Card";
 import classes from "./Login.module.css";
@@ -31,7 +37,8 @@ const Login = (props) => {
   // const [enteredPassword, setEnteredPassword] = useState('');
   // const [passwordIsValid, setPasswordIsValid] = useState();
   const [formIsValid, setFormIsValid] = useState(false);
-
+  const emailInpurRef = useRef();
+  const passwordInputRef = useRef();
   const [emailState, dispatchEmail] = useReducer(emailReducer, {
     value: "",
     isValid: null,
@@ -89,7 +96,13 @@ const Login = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    ctx.onLogin(emailState.value, passwordState.value);
+    if (formIsValid) {
+      ctx.onLogin(emailState.value, passwordState.value);
+    } else if (!emailIsValid) {
+      emailInpurRef.current.focus();
+    } else {
+      passwordInputRef.current.focus();
+    }
   };
 
   return (
@@ -99,6 +112,7 @@ const Login = (props) => {
           id="email"
           label="E-mail"
           type="email"
+          ref={emailInpurRef}
           isVlaid={emailIsValid}
           value={emailState.value}
           onChange={emailChangeHandler}
@@ -106,6 +120,7 @@ const Login = (props) => {
         />
         <Input
           id="password"
+          ref={passwordInputRef}
           label="Password"
           type="password"
           isValid={passwordIsValid}
@@ -114,7 +129,7 @@ const Login = (props) => {
           onBlur={validatePasswordHandler}
         />
         <div className={classes.actions}>
-          <Button type="submit" className={classes.btn} disabled={!formIsValid}>
+          <Button type="submit" className={classes.btn}>
             Login
           </Button>
         </div>
@@ -122,5 +137,9 @@ const Login = (props) => {
     </Card>
   );
 };
+
+// we are trying to made the login button always be enabled.
+// if emmail is invalid, focus on that field
+// if passowrd is invalid focus on the password field
 
 export default Login;
