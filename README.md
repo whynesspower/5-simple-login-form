@@ -1,4 +1,10 @@
-# Getting Started with Create React App
+### Dummy project to practice advanced hooks like
+`useContext, useEffect, useReducer, useRef, useImperativeHandle`
+
+![image](https://user-images.githubusercontent.com/77494053/228162776-c185fa9c-36fb-416c-8c14-2943ad7218c4.png)
+
+
+![image](https://user-images.githubusercontent.com/77494053/228162746-29bde97a-0c80-4c1b-8cba-4d584c55914f.png)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
